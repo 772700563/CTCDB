@@ -45,7 +45,7 @@ namespace CTCDB
         /// <param name="sql"></param>
         /// <param name="parameters"></param>
         /// <returns></returns>
-        private static DataTable ExcuteDataTable(OracleConnection conn, string sql, params OracleParameter[] parameters)
+        public static DataTable ExcuteDataTable(OracleConnection conn, string sql, params OracleParameter[] parameters)
         {
             if (conn.State != ConnectionState.Open)
             {
@@ -67,6 +67,21 @@ namespace CTCDB
             {
                 return new DataTable();
             }
+        }
+
+        /// <summary>
+        /// 获取数据表
+        /// </summary>
+        /// <param name="conn"></param>
+        /// <param name="user_name"></param>
+        /// <param name="table_name"></param>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
+        public static DataTable GetDBTable(OracleConnection conn, string user_name, string table_name, params OracleParameter[] parameters)
+        {
+            string sqlstr = string.Format("SELECT * FROM {0}.\"{1}\"", user_name, table_name);
+            DataTable dataTable = ExcuteDataTable(conn, sqlstr);
+            return dataTable;
         }
     }
 }
